@@ -39,8 +39,10 @@ void main()
 			}
 		}
 
-		string x86buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x86"))\"".text;
-		string x64buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=x64 /p:Configuration=Release /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x64"))\"".text;
+		string config = "Release";
+		debug(GenerateDebug) { config = "Debug"; }
+		string x86buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=Win32 /p:Configuration=$(config) /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x86"))\"".text;
+		string x64buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=x64 /p:Configuration=$(config) /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x64"))\"".text;
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Static Library:".text);
 		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(x86buildparams)".text, zstdPath);
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Static Library:".text);
