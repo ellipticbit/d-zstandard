@@ -4,9 +4,3 @@ authors "EllipticBit LLC"
 copyright "Copyright © 2024, EllipticBit LLC"
 license "BSL-1.0"
 targetType "executable"
-configuration "BuildRelease" {
-	buildOptions "releaseMode"
-}
-configuration "BuildDebug" {
-	buildOptions "debugMode"
-}

@@ -16,3 +16,4 @@ zstd-build-test-*
 *.lst
 
 lib/
+*.selections.json
