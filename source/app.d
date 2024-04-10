@@ -4,6 +4,7 @@ import std.file;
 import std.path;
 import std.process;
 import std.stdio;
+import std.string;
 
 void main()
 {
@@ -51,6 +52,15 @@ void main()
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
 		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
 		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
+
+		string difilein = readText(buildNormalizedPath(getcwd(), "zstd.di"));
+		difilein = difilein.replace("\r\n", "\n");
+		auto difile = File(buildNormalizedPath(getcwd(), "zstd.di"), "w");
+		difile.writeln("module zstd;");
+		difile.writeln();
+		difile.writeln(difilein);
+		difile.flush();
+		difile.close();
 	}
 }
 

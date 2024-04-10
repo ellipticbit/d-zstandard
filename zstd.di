@@ -1,3 +1,5 @@
+module zstd;
+
 // D import file generated from 'source\zstd.c'
 extern (C)
 {
@@ -837,3 +839,4 @@ extern (C)
 	enum int _CRT_PACKING = 8;
 }
 import __builtins;
+
