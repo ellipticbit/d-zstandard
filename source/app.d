@@ -40,14 +40,18 @@ void main()
 			}
 		}
 
-		string config = "Release";
-		debug(GenerateDebug) { config = "Debug"; }
-		string x86buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=Win32 /p:Configuration=$(config) /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x86"))\"".text;
-		string x64buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=x64 /p:Configuration=$(config) /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "win-x64"))\"".text;
-		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Static Library:".text);
-		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(x86buildparams)".text, zstdPath);
-		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Static Library:".text);
-		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(x64buildparams)".text, zstdPath);
+		string relx86buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=Win32 /p:Configuration=Release /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "release", "win-x86"))\"".text;
+		string relx64buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=x64 /p:Configuration=Release /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "release", "win-x64"))\"".text;
+		string debx86buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=Win32 /p:Configuration=Debug /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "debug", "win-x86"))\"".text;
+		string debx64buildparams = i"/verbosity:minimal /nologo /t:Build /p:Platform=x64 /p:Configuration=Debug /p:PlatformToolset=v142 /p:OutDir=\"$(buildNormalizedPath(getcwd(), "lib", "debug", "win-x64"))\"".text;
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Release Static Library:".text);
+		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(relx86buildparams)".text, zstdPath);
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Release Static Library:".text);
+		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(relx64buildparams)".text, zstdPath);
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Debug Static Library:".text);
+		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(debx86buildparams)".text, zstdPath);
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Debug Static Library:".text);
+		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(debx64buildparams)".text, zstdPath);
 
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
 		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
