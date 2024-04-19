@@ -1,4 +1,6 @@
 module zstd;
+nothrow:
+@nogc:
 
 // D import file generated from 'source\zstd.c'
 extern (C)

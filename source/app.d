@@ -61,6 +61,8 @@ void main()
 		difilein = difilein.replace("\r\n", "\n");
 		auto difile = File(buildNormalizedPath(getcwd(), "zstd.di"), "w");
 		difile.writeln("module zstd;");
+		difile.writeln("nothrow:");
+		difile.writeln("@nogc:");
 		difile.writeln();
 		difile.writeln(difilein);
 		difile.flush();
