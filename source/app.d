@@ -55,9 +55,30 @@ void main()
 
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
 		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
-		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
+		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd_win.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
+	}
 
-		string difilein = readText(buildNormalizedPath(getcwd(), "zstd.di"));
+	version(linux) {
+		version(x86) {
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Static Library:".text);
+		string outPath = buildNormalizedPath(getcwd(), "lib", "release", "linux-x86");
+		}
+		version(X86_64) {
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Static Library:".text);
+		string outPath = buildNormalizedPath(getcwd(), "lib", "release", "linux-x64");
+		}
+
+		runCommand("make", zstdPath);
+		runCommand(i"mkdir -p $(outPath)".text, getcwd());
+		runCommand(i"cp -f $(buildNormalizedPath(zstdPath, "lib", "libzstd.a")) $(outPath)".text, getcwd());
+
+		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
+		runCommand("dmd source/zstd_posix.c -Hf=zstd.di -verrors=0 -main", getcwd());
+	}
+
+	string dipath = buildNormalizedPath(getcwd(), "zstd.di");
+	if (exists(dipath)) {
+		string difilein = readText(dipath);
 		difilein = difilein.replace("\r\n", "\n");
 		auto difile = File(buildNormalizedPath(getcwd(), "zstd.di"), "w");
 		difile.writeln("module zstd;");

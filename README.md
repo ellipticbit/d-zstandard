@@ -9,4 +9,4 @@ To build this package simply run `dub run` on a supported platform. The resultin
 ### Supported Platforms
 
 1. Windows (x86/x64)
-2. ~~Linux (x86/x64)~~ (Coming soon)
+2. Linux (x86/x64)

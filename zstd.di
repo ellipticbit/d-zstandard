@@ -2,66 +2,26 @@ module zstd;
 nothrow:
 @nogc:
 
-// D import file generated from 'source\zstd.c'
+// D import file generated from 'source/zstd_posix.c'
 extern (C)
 {
 	alias __uint16_t = ushort;
 	alias __uint32_t = uint;
 	alias __uint64_t = ulong;
-	align alias uintptr_t = ulong;
-	align alias va_list = char*;
-	align void __va_start(char**, ...);
-	alias size_t = ulong;
 	alias ptrdiff_t = long;
-	alias intptr_t = long;
-	alias __vcrt_bool = bool;
-	alias wchar_t = ushort;
-	void __security_init_cookie();
-	void __security_check_cookie(ulong _StackCookie);
-	void __report_gsfailure(ulong _StackCookie);
-	extern __gshared ulong __security_cookie;
-	alias __crt_bool = bool;
-	void _invalid_parameter_noinfo();
-	void _invalid_parameter_noinfo_noreturn();
-	void _invoke_watson(const(ushort)* _Expression, const(ushort)* _FunctionName, const(ushort)* _FileName, uint _LineNo, ulong _Reserved);
-	alias errno_t = int;
-	alias wint_t = ushort;
-	alias wctype_t = ushort;
-	alias __time32_t = int;
-	alias __time64_t = long;
-	struct __crt_locale_data_public
+	alias size_t = ulong;
+	alias wchar_t = int;
+	struct max_align_t
 	{
-		const(ushort)* _locale_pctype = void;
-		int _locale_mb_cur_max = void;
-		uint _locale_lc_codepage = void;
+		long __max_align_ll = void;
+		real __max_align_ld = void;
 	}
-	struct __crt_locale_pointers
-	{
-		__crt_locale_data* locinfo = void;
-		__crt_multibyte_data* mbcinfo = void;
-	}
-	alias _locale_t = __crt_locale_pointers*;
-	struct _Mbstatet
-	{
-		uint _Wchar = void;
-		ushort _Byte = void;
-		ushort _State = void;
-	}
-	struct _Mbstatet;
-	alias mbstate_t = _Mbstatet;
-	alias time_t = long;
-	alias rsize_t = ulong;
-	int* _errno();
-	int _set_errno(int _Value);
-	int _get_errno(int* _Value);
-	extern uint __threadid();
-	extern ulong __threadhandle();
 	uint ZSTD_versionNumber();
 	const(char)* ZSTD_versionString();
 	ulong ZSTD_compress(void* dst, ulong dstCapacity, const(void)* src, ulong srcSize, int compressionLevel);
 	ulong ZSTD_decompress(void* dst, ulong dstCapacity, const(void)* src, ulong compressedSize);
 	ulong ZSTD_getFrameContentSize(const(void)* src, ulong srcSize);
-	deprecated("Replaced by ZSTD_getFrameContentSize") deprecated ulong ZSTD_getDecompressedSize(const(void)* src, ulong srcSize);
+	deprecated ulong ZSTD_getDecompressedSize(const(void)* src, ulong srcSize);
 	ulong ZSTD_findFrameCompressedSize(const(void)* src, ulong srcSize);
 	ulong ZSTD_compressBound(ulong srcSize);
 	uint ZSTD_isError(ulong code);
@@ -289,556 +249,703 @@ extern (C)
 	ulong ZSTD_sizeof_DStream(const ZSTD_DCtx_s* zds);
 	ulong ZSTD_sizeof_CDict(const ZSTD_CDict_s* cdict);
 	ulong ZSTD_sizeof_DDict(const ZSTD_DDict_s* ddict);
-	auto __control_entrypoint(__MP1)(__MP1 category)
+	enum int __STDC__ = 1;
+	enum long __STDC_VERSION__ = 201710L;
+	enum int __STDC_UTF_16__ = 1;
+	enum int __STDC_UTF_32__ = 1;
+	enum int __STDC_HOSTED__ = 1;
+	enum int __GNUC__ = 11;
+	enum int __GNUC_MINOR__ = 4;
+	enum int __GNUC_PATCHLEVEL__ = 0;
+	/+enum __VERSION__ = "11.4.0"+/;
+	enum int __ATOMIC_RELAXED = 0;
+	enum int __ATOMIC_SEQ_CST = 5;
+	enum int __ATOMIC_ACQUIRE = 2;
+	enum int __ATOMIC_RELEASE = 3;
+	enum int __ATOMIC_ACQ_REL = 4;
+	enum int __ATOMIC_CONSUME = 1;
+	enum int __pic__ = 2;
+	enum int __PIC__ = 2;
+	enum int __pie__ = 2;
+	enum int __PIE__ = 2;
+	enum int __FINITE_MATH_ONLY__ = 0;
+	enum int _LP64 = 1;
+	enum int __LP64__ = 1;
+	enum int __SIZEOF_INT__ = 4;
+	enum int __SIZEOF_LONG__ = 8;
+	enum int __SIZEOF_LONG_LONG__ = 8;
+	enum int __SIZEOF_SHORT__ = 2;
+	enum int __SIZEOF_FLOAT__ = 4;
+	enum int __SIZEOF_DOUBLE__ = 8;
+	enum int __SIZEOF_LONG_DOUBLE__ = 16;
+	enum int __SIZEOF_SIZE_T__ = 8;
+	enum int __CHAR_BIT__ = 8;
+	enum int __BIGGEST_ALIGNMENT__ = 16;
+	enum int __ORDER_LITTLE_ENDIAN__ = 1234;
+	enum int __ORDER_BIG_ENDIAN__ = 4321;
+	enum int __ORDER_PDP_ENDIAN__ = 3412;
+	enum int __SIZEOF_POINTER__ = 8;
+	enum __GNUC_EXECUTION_CHARSET_NAME = "UTF-8";
+	enum __GNUC_WIDE_EXECUTION_CHARSET_NAME = "UTF-32LE";
+	enum int __GXX_ABI_VERSION = 1016;
+	enum int __SCHAR_MAX__ = 127;
+	enum int __SHRT_MAX__ = 32767;
+	enum int __INT_MAX__ = 2147483647;
+	enum long __LONG_MAX__ = 9223372036854775807L;
+	enum long __LONG_LONG_MAX__ = 9223372036854775807L;
+	enum int __WCHAR_MAX__ = 2147483647;
+	auto __WCHAR_MIN__()()
 	{
-		return _SAL_L_Source_(__control_entrypoint, category, __inner_control_entrypoint(category));
+		return -__WCHAR_MAX__ - 1;
 	}
-	auto _Post_bytecap_(__MP7)(__MP7 size)
+	enum uint __WINT_MAX__ = 4294967295u;
+	enum uint __WINT_MIN__ = 0u;
+	enum long __PTRDIFF_MAX__ = 9223372036854775807L;
+	enum ulong __SIZE_MAX__ = 18446744073709551615LU;
+	enum int __SCHAR_WIDTH__ = 8;
+	enum int __SHRT_WIDTH__ = 16;
+	enum int __INT_WIDTH__ = 32;
+	enum int __LONG_WIDTH__ = 64;
+	enum int __LONG_LONG_WIDTH__ = 64;
+	enum int __WCHAR_WIDTH__ = 32;
+	enum int __WINT_WIDTH__ = 32;
+	enum int __PTRDIFF_WIDTH__ = 64;
+	enum int __SIZE_WIDTH__ = 64;
+	enum long __INTMAX_MAX__ = 9223372036854775807L;
+	enum ulong __UINTMAX_MAX__ = 18446744073709551615LU;
+	enum int __INTMAX_WIDTH__ = 64;
+	enum int __SIG_ATOMIC_MAX__ = 2147483647;
+	auto __SIG_ATOMIC_MIN__()()
 	{
-		return _SAL1_1_Source_(_Post_bytecap_, size, _Post1_impl_(__bytecap_impl(size)));
+		return -__SIG_ATOMIC_MAX__ - 1;
 	}
-	enum int ZSTD_VERSION_RELEASE = 6;
-	auto _Inout_bytecount_c_(__MP21)(__MP21 size)
+	enum int __SIG_ATOMIC_WIDTH__ = 32;
+	enum int __INT8_MAX__ = 127;
+	enum int __INT16_MAX__ = 32767;
+	enum int __INT32_MAX__ = 2147483647;
+	enum long __INT64_MAX__ = 9223372036854775807L;
+	enum int __UINT8_MAX__ = 255;
+	enum int __UINT16_MAX__ = 65535;
+	enum uint __UINT32_MAX__ = 4294967295u;
+	enum ulong __UINT64_MAX__ = 18446744073709551615LU;
+	enum int __INT_LEAST8_MAX__ = 127;
+	auto __INT8_C(__MP3)(__MP3 c)
 	{
-		return _SAL1_1_Source_(_Inout_bytecount_c_, size, _Prepost_bytecount_c_(size));
+		return c;
 	}
-	enum int _CRT_HAS_C11 = 0;
-	auto __deref_out_ecount_nz(__MP57)(__MP57 size)
+	enum int __INT_LEAST8_WIDTH__ = 8;
+	enum int __INT_LEAST16_MAX__ = 32767;
+	auto __INT16_C(__MP4)(__MP4 c)
 	{
-		return _SAL1_Source_(__deref_out_ecount_nz, size, __deref_out_ecount(size));
+		return c;
 	}
-	auto _I16_MIN()()
+	enum int __INT_LEAST16_WIDTH__ = 16;
+	enum int __INT_LEAST32_MAX__ = 2147483647;
+	auto __INT32_C(__MP5)(__MP5 c)
 	{
-		return -32767 - 1;
+		return c;
 	}
-	enum int CHAR_BIT = 8;
+	enum int __INT_LEAST32_WIDTH__ = 32;
+	enum long __INT_LEAST64_MAX__ = 9223372036854775807L;
+	enum int __INT_LEAST64_WIDTH__ = 64;
+	enum int __UINT_LEAST8_MAX__ = 255;
+	auto __UINT8_C(__MP7)(__MP7 c)
+	{
+		return c;
+	}
+	enum int __UINT_LEAST16_MAX__ = 65535;
+	auto __UINT16_C(__MP8)(__MP8 c)
+	{
+		return c;
+	}
+	enum uint __UINT_LEAST32_MAX__ = 4294967295u;
+	enum ulong __UINT_LEAST64_MAX__ = 18446744073709551615LU;
+	enum int __INT_FAST8_MAX__ = 127;
+	enum int __INT_FAST8_WIDTH__ = 8;
+	enum long __INT_FAST16_MAX__ = 9223372036854775807L;
+	enum int __INT_FAST16_WIDTH__ = 64;
+	enum long __INT_FAST32_MAX__ = 9223372036854775807L;
+	enum int __INT_FAST32_WIDTH__ = 64;
+	enum long __INT_FAST64_MAX__ = 9223372036854775807L;
+	enum int __INT_FAST64_WIDTH__ = 64;
+	enum int __UINT_FAST8_MAX__ = 255;
+	enum ulong __UINT_FAST16_MAX__ = 18446744073709551615LU;
+	enum ulong __UINT_FAST32_MAX__ = 18446744073709551615LU;
+	enum ulong __UINT_FAST64_MAX__ = 18446744073709551615LU;
+	enum long __INTPTR_MAX__ = 9223372036854775807L;
+	enum int __INTPTR_WIDTH__ = 64;
+	enum ulong __UINTPTR_MAX__ = 18446744073709551615LU;
+	enum int __GCC_IEC_559 = 2;
+	enum int __GCC_IEC_559_COMPLEX = 2;
+	enum int __FLT_EVAL_METHOD__ = 0;
+	enum int __FLT_EVAL_METHOD_TS_18661_3__ = 0;
+	enum int __DEC_EVAL_METHOD__ = 2;
+	enum int __FLT_RADIX__ = 2;
+	enum int __FLT_MANT_DIG__ = 24;
+	enum int __FLT_DIG__ = 6;
+	auto __FLT_MIN_EXP__()()
+	{
+		return -125;
+	}
+	auto __FLT_MIN_10_EXP__()()
+	{
+		return -37;
+	}
+	enum int __FLT_MAX_EXP__ = 128;
+	enum int __FLT_MAX_10_EXP__ = 38;
+	enum int __FLT_DECIMAL_DIG__ = 9;
+	enum float __FLT_MAX__ = 0xf.fffffp+124F;
+	enum float __FLT_NORM_MAX__ = 0xf.fffffp+124F;
+	enum float __FLT_MIN__ = 0x8p-129F;
+	enum float __FLT_EPSILON__ = 0x8p-26F;
+	enum float __FLT_DENORM_MIN__ = 0x8p-152F;
+	enum int __FLT_HAS_DENORM__ = 1;
+	enum int __FLT_HAS_INFINITY__ = 1;
+	enum int __FLT_HAS_QUIET_NAN__ = 1;
+	enum int __FLT_IS_IEC_60559__ = 2;
+	enum int __DBL_MANT_DIG__ = 53;
+	enum int __DBL_DIG__ = 15;
+	auto __DBL_MIN_EXP__()()
+	{
+		return -1021;
+	}
+	auto __DBL_MIN_10_EXP__()()
+	{
+		return -307;
+	}
+	enum int __DBL_MAX_EXP__ = 1024;
+	enum int __DBL_MAX_10_EXP__ = 308;
+	enum int __DBL_DECIMAL_DIG__ = 17;
+	auto __DBL_MAX__()()
+	{
+		return cast(double)0xf.ffffffffffff8p+1020L;
+	}
+	auto __DBL_NORM_MAX__()()
+	{
+		return cast(double)0xf.ffffffffffff8p+1020L;
+	}
+	auto __DBL_MIN__()()
+	{
+		return cast(double)0x8p-1025L;
+	}
+	auto __DBL_EPSILON__()()
+	{
+		return cast(double)0x8p-55L;
+	}
+	auto __DBL_DENORM_MIN__()()
+	{
+		return cast(double)0x8p-1077L;
+	}
+	enum int __DBL_HAS_DENORM__ = 1;
+	enum int __DBL_HAS_INFINITY__ = 1;
+	enum int __DBL_HAS_QUIET_NAN__ = 1;
+	enum int __DBL_IS_IEC_60559__ = 2;
+	enum int __LDBL_MANT_DIG__ = 64;
+	enum int __LDBL_DIG__ = 18;
+	auto __LDBL_MIN_EXP__()()
+	{
+		return -16381;
+	}
+	auto __LDBL_MIN_10_EXP__()()
+	{
+		return -4931;
+	}
+	enum int __LDBL_MAX_EXP__ = 16384;
+	enum int __LDBL_MAX_10_EXP__ = 4932;
+	enum int __DECIMAL_DIG__ = 21;
+	enum int __LDBL_DECIMAL_DIG__ = 21;
+	enum real __LDBL_MAX__ = 0xf.fffffffffffffffp+16380L;
+	enum real __LDBL_NORM_MAX__ = 0xf.fffffffffffffffp+16380L;
+	enum real __LDBL_MIN__ = 0x8p-16385L;
+	enum real __LDBL_EPSILON__ = 0x8p-66L;
+	enum real __LDBL_DENORM_MIN__ = 3.6452e-4951L;
+	enum int __LDBL_HAS_DENORM__ = 1;
+	enum int __LDBL_HAS_INFINITY__ = 1;
+	enum int __LDBL_HAS_QUIET_NAN__ = 1;
+	enum int __LDBL_IS_IEC_60559__ = 2;
+	enum int __FLT32_MANT_DIG__ = 24;
+	enum int __FLT32_DIG__ = 6;
+	auto __FLT32_MIN_EXP__()()
+	{
+		return -125;
+	}
+	auto __FLT32_MIN_10_EXP__()()
+	{
+		return -37;
+	}
+	enum int __FLT32_MAX_EXP__ = 128;
+	enum int __FLT32_MAX_10_EXP__ = 38;
+	enum int __FLT32_DECIMAL_DIG__ = 9;
+	enum int __FLT32_HAS_DENORM__ = 1;
+	enum int __FLT32_HAS_INFINITY__ = 1;
+	enum int __FLT32_HAS_QUIET_NAN__ = 1;
+	enum int __FLT32_IS_IEC_60559__ = 2;
+	enum int __FLT64_MANT_DIG__ = 53;
+	enum int __FLT64_DIG__ = 15;
+	auto __FLT64_MIN_EXP__()()
+	{
+		return -1021;
+	}
+	auto __FLT64_MIN_10_EXP__()()
+	{
+		return -307;
+	}
+	enum int __FLT64_MAX_EXP__ = 1024;
+	enum int __FLT64_MAX_10_EXP__ = 308;
+	enum int __FLT64_DECIMAL_DIG__ = 17;
+	enum int __FLT64_HAS_DENORM__ = 1;
+	enum int __FLT64_HAS_INFINITY__ = 1;
+	enum int __FLT64_HAS_QUIET_NAN__ = 1;
+	enum int __FLT64_IS_IEC_60559__ = 2;
+	enum int __FLT128_MANT_DIG__ = 113;
+	enum int __FLT128_DIG__ = 33;
+	auto __FLT128_MIN_EXP__()()
+	{
+		return -16381;
+	}
+	auto __FLT128_MIN_10_EXP__()()
+	{
+		return -4931;
+	}
+	enum int __FLT128_MAX_EXP__ = 16384;
+	enum int __FLT128_MAX_10_EXP__ = 4932;
+	enum int __FLT128_DECIMAL_DIG__ = 36;
+	enum int __FLT128_HAS_DENORM__ = 1;
+	enum int __FLT128_HAS_INFINITY__ = 1;
+	enum int __FLT128_HAS_QUIET_NAN__ = 1;
+	enum int __FLT128_IS_IEC_60559__ = 2;
+	enum int __FLT32X_MANT_DIG__ = 53;
+	enum int __FLT32X_DIG__ = 15;
+	auto __FLT32X_MIN_EXP__()()
+	{
+		return -1021;
+	}
+	auto __FLT32X_MIN_10_EXP__()()
+	{
+		return -307;
+	}
+	enum int __FLT32X_MAX_EXP__ = 1024;
+	enum int __FLT32X_MAX_10_EXP__ = 308;
+	enum int __FLT32X_DECIMAL_DIG__ = 17;
+	enum int __FLT32X_HAS_DENORM__ = 1;
+	enum int __FLT32X_HAS_INFINITY__ = 1;
+	enum int __FLT32X_HAS_QUIET_NAN__ = 1;
+	enum int __FLT32X_IS_IEC_60559__ = 2;
+	enum int __FLT64X_MANT_DIG__ = 64;
+	enum int __FLT64X_DIG__ = 18;
+	auto __FLT64X_MIN_EXP__()()
+	{
+		return -16381;
+	}
+	auto __FLT64X_MIN_10_EXP__()()
+	{
+		return -4931;
+	}
+	enum int __FLT64X_MAX_EXP__ = 16384;
+	enum int __FLT64X_MAX_10_EXP__ = 4932;
+	enum int __FLT64X_DECIMAL_DIG__ = 21;
+	enum int __FLT64X_HAS_DENORM__ = 1;
+	enum int __FLT64X_HAS_INFINITY__ = 1;
+	enum int __FLT64X_HAS_QUIET_NAN__ = 1;
+	enum int __FLT64X_IS_IEC_60559__ = 2;
+	enum int __DEC32_MANT_DIG__ = 7;
+	auto __DEC32_MIN_EXP__()()
+	{
+		return -94;
+	}
+	enum int __DEC32_MAX_EXP__ = 97;
+	enum int __DEC64_MANT_DIG__ = 16;
+	auto __DEC64_MIN_EXP__()()
+	{
+		return -382;
+	}
+	enum int __DEC64_MAX_EXP__ = 385;
+	enum int __DEC128_MANT_DIG__ = 34;
+	auto __DEC128_MIN_EXP__()()
+	{
+		return -6142;
+	}
+	enum int __DEC128_MAX_EXP__ = 6145;
+	enum int __GNUC_STDC_INLINE__ = 1;
+	enum int __NO_INLINE__ = 1;
+	enum int __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1 = 1;
+	enum int __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2 = 1;
+	enum int __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 = 1;
+	enum int __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 = 1;
+	enum int __GCC_ATOMIC_BOOL_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_CHAR_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_CHAR16_T_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_CHAR32_T_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_WCHAR_T_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_SHORT_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_INT_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_LONG_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_LLONG_LOCK_FREE = 2;
+	enum int __GCC_ATOMIC_TEST_AND_SET_TRUEVAL = 1;
+	enum int __GCC_ATOMIC_POINTER_LOCK_FREE = 2;
+	enum int __HAVE_SPECULATION_SAFE_VALUE = 1;
+	enum int __GCC_HAVE_DWARF2_CFI_ASM = 1;
+	enum int __PRAGMA_REDEFINE_EXTNAME = 1;
+	enum int __SSP_STRONG__ = 3;
+	enum int __SIZEOF_INT128__ = 16;
+	enum int __SIZEOF_WCHAR_T__ = 4;
+	enum int __SIZEOF_WINT_T__ = 4;
+	enum int __SIZEOF_PTRDIFF_T__ = 8;
+	enum int __amd64 = 1;
+	enum int __amd64__ = 1;
+	enum int __x86_64 = 1;
+	enum int __x86_64__ = 1;
+	enum int __SIZEOF_FLOAT80__ = 16;
+	enum int __SIZEOF_FLOAT128__ = 16;
+	enum int __ATOMIC_HLE_ACQUIRE = 65536;
+	enum int __ATOMIC_HLE_RELEASE = 131072;
+	enum int __GCC_ASM_FLAG_OUTPUTS__ = 1;
+	enum int __k8 = 1;
+	enum int __k8__ = 1;
+	enum int __code_model_small__ = 1;
+	enum int __MMX__ = 1;
+	enum int __SSE__ = 1;
+	enum int __SSE2__ = 1;
+	enum int __FXSR__ = 1;
+	enum int __SSE_MATH__ = 1;
+	enum int __SSE2_MATH__ = 1;
+	enum int __MMX_WITH_SSE__ = 1;
+	enum int __SEG_FS = 1;
+	enum int __SEG_GS = 1;
+	enum int __CET__ = 3;
+	enum int __gnu_linux__ = 1;
+	enum int __linux = 1;
+	enum int __linux__ = 1;
+	enum int linux = 1;
+	enum int __unix = 1;
+	enum int __unix__ = 1;
+	enum int unix = 1;
+	enum int __ELF__ = 1;
+	enum int __DECIMAL_BID_FORMAT__ = 1;
+	enum int _STDC_PREDEF_H = 1;
+	enum int __STDC_IEC_559__ = 1;
+	enum long __STDC_IEC_60559_BFP__ = 201404L;
+	enum int __STDC_IEC_559_COMPLEX__ = 1;
+	enum long __STDC_IEC_60559_COMPLEX__ = 201404L;
+	enum long __STDC_ISO_10646__ = 201706L;
 	enum int __IMPORTC__ = 1;
-	auto __in_ecount(__MP61)(__MP61 size)
-	{
-		return _SAL1_Source_(__in_ecount, size, _In_reads_(size));
-	}
-	enum int _ARGMAX = 100;
-	auto _TRUNCATE()()
-	{
-		return cast(ulong)-1;
-	}
-	auto __crt_va_end(__MP82)(__MP82 ap)
-	{
-		return cast(void)(ap = cast(char*)0);
-	}
-	enum int ZSTD_CLEVEL_DEFAULT = 3;
-	auto __deref_inout_ecount_nz(__MP104)(__MP104 size)
-	{
-		return _SAL1_Source_(__deref_inout_ecount_nz, size, __deref_inout_ecount(size));
-	}
-	enum int LONG_MAX = 2147483647;
-	auto __inout_bcount_full(__MP124)(__MP124 size)
-	{
-		return _SAL1_Source_(__inout_bcount_full, size, _Inout_updates_bytes_all_(size));
-	}
-	enum int _M_X64 = 100;
-	auto _Inout_ptrdiff_count_(__MP126)(__MP126 size)
-	{
-		return _SAL1_1_Source_(_Inout_ptrdiff_count_, size, _Pre_ptrdiff_count_(size));
-	}
-	auto SHRT_MIN()()
-	{
-		return -32768;
-	}
-	enum int _MSC_EXTENSIONS = 1;
-	auto __in_bcount(__MP169)(__MP169 size)
-	{
-		return _SAL1_Source_(__in_bcount, size, _In_reads_bytes_(size));
-	}
-	enum int _CRT_INTERNAL_NONSTDC_NAMES = 1;
-	auto _Called_from_function_class_(__MP172)(__MP172 x)
-	{
-		return _In_function_class_(x);
-	}
-	auto __blocksOn(__MP176)(__MP176 resource)
-	{
-		return _SAL_L_Source_(__blocksOn, resource, __inner_blocksOn(resource));
-	}
-	enum int _HAS_CXX17 = 0;
-	auto __in_bcount_opt(__MP178)(__MP178 size)
-	{
-		return _SAL1_Source_(__in_bcount_opt, size, _In_reads_bytes_opt_(size));
-	}
-	enum int _USE_ATTRIBUTES_FOR_SAL = 0;
-	auto ZSTD_EXPAND_AND_QUOTE(__MP183)(__MP183 str)
-	{
-		return ZSTD_QUOTE(str);
-	}
-	auto _Inout_bytecount_(__MP203)(__MP203 size)
-	{
-		return _SAL1_1_Source_(_Inout_bytecount_, size, _Prepost_bytecount_(size));
-	}
-	enum ulong _UI64_MAX = 18446744073709551615LU;
-	auto __out_bcount_opt(__MP205)(__MP205 size)
-	{
-		return _SAL1_Source_(__out_bcount_opt, size, _Out_writes_bytes_opt_(size));
-	}
-	auto __inout_bcount_z_opt(__MP207)(__MP207 size)
-	{
-		return _SAL1_Source_(__inout_bcount_z_opt, size, __inout_bcount_opt(size));
-	}
-	auto _Inout_opt_count_(__MP210)(__MP210 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_count_, size, _Prepost_opt_count_(size));
-	}
-	enum int USHRT_MAX = 65535;
-	enum int ZSTD_VERSION_MINOR = 5;
-	auto __crt_va_start_a(__MP253, __MP254)(__MP253 ap, __MP254 x)
-	{
-		return cast(void)__va_start(&ap, x);
-	}
-	auto __in_ecount_nz_opt(__MP256)(__MP256 size)
-	{
-		return _SAL1_Source_(__in_ecount_nz_opt, size, __in_ecount_opt(size));
-	}
-	auto __deref_opt_inout_ecount_nz_opt(__MP260)(__MP260 size)
-	{
-		return _SAL1_Source_(__deref_opt_inout_ecount_nz_opt, size, __deref_opt_inout_ecount_opt(size));
-	}
-	auto _Inout_count_(__MP310)(__MP310 size)
-	{
-		return _SAL1_1_Source_(_Inout_count_, size, _Prepost_count_(size));
-	}
-	auto _Inout_opt_bytecount_(__MP311)(__MP311 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_bytecount_, size, _Prepost_opt_bytecount_(size));
-	}
-	auto _CRT_INSECURE_DEPRECATE_GLOBALS(__MP312)(__MP312 replacement)
-	{
-		return _CRT_INSECURE_DEPRECATE(replacement);
-	}
-	enum int _MSC_BUILD = 0;
-	auto __builtin_alloca(__MP325)(__MP325 x)
-	{
-		return alloca(x);
-	}
-	auto __out_ecount_full(__MP338)(__MP338 size)
-	{
-		return _SAL1_Source_(__out_ecount_full, size, _Out_writes_all_(size));
-	}
-	enum ulong ULLONG_MAX = 18446744073709551615LU;
-	auto _CRT_STRINGIZE(__MP364)(__MP364 x)
-	{
-		return _CRT_STRINGIZE_(x);
-	}
-	auto __deref_out_bcount_full(__MP377)(__MP377 size)
-	{
-		return _SAL1_Source_(__deref_out_bcount_full, size, __deref_out_bcount_part(size, size));
-	}
-	enum int _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT = 0;
-	auto _Post_cap_(__MP392)(__MP392 size)
-	{
-		return _SAL1_1_Source_(_Post_cap_, size, _Post1_impl_(__cap_impl(size)));
-	}
-	auto _Inout_opt_bytecount_x_(__MP395)(__MP395 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_bytecount_x_, size, _Prepost_opt_bytecount_x_(size));
-	}
-	auto __inout_ecount_z(__MP398)(__MP398 size)
-	{
-		return _SAL1_Source_(__inout_ecount_z, size, _Inout_updates_z_(size));
-	}
-	auto __deref_inout_bcount_nz_opt(__MP399)(__MP399 size)
-	{
-		return _SAL1_Source_(__deref_inout_bcount_nz_opt, size, __deref_inout_bcount_opt(size));
-	}
-	enum long LLONG_MAX = 9223372036854775807L;
-	auto __deref_inout_bcount_nz(__MP424)(__MP424 size)
-	{
-		return _SAL1_Source_(__deref_inout_bcount_nz, size, __deref_inout_ecount(size));
-	}
-	enum int _CRT_FUNCTIONS_REQUIRED = 1;
-	auto __has_extension(__MP440)(__MP440 x)
-	{
-		return 0;
-	}
-	enum int _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE = 1;
-	enum int ZSTD_BLOCKSIZELOG_MAX = 17;
-	enum int MB_LEN_MAX = 5;
-	enum int _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES = 0;
-	auto __vcrt_free_normal(__MP507)(__MP507 _Memory)
-	{
-		return free(_Memory);
-	}
-	enum long _I64_MAX = 9223372036854775807L;
-	auto __crt_countof(__MP549)(__MP549 _Array)
-	{
-		return _Array.sizeof / _Array[0].sizeof;
-	}
-	enum int _WIN64 = 1;
-	auto __deref_out_ecount(__MP556)(__MP556 size)
-	{
-		return _SAL1_Source_(__deref_out_ecount, size, _Outptr_result_buffer_(size));
-	}
-	auto _I8_MIN()()
-	{
-		return -127 - 1;
-	}
-	auto _CRT_SIZE_MAX()()
-	{
-		return cast(ulong)-1;
-	}
-	enum int UCHAR_MAX = 255;
-	auto __vcrt_calloc_normal(__MP562, __MP563)(__MP562 _Count, __MP563 _Size)
-	{
-		return calloc(_Count, _Size);
-	}
-	auto __vcrt_malloc_normal(__MP611)(__MP611 _Size)
-	{
-		return malloc(_Size);
-	}
-	auto __in_ecount_z(__MP612)(__MP612 size)
-	{
-		return _SAL1_Source_(__in_ecount_z, size, _In_reads_z_(size));
-	}
-	enum int _SECURECRT_FILL_BUFFER_PATTERN = 254;
-	enum int _IS_ASSIGNABLE_NOCHECK_SUPPORTED = 1;
-	auto _CRT_WIDE(__MP641)(__MP641 s)
-	{
-		return _CRT_WIDE_(s);
-	}
-	auto __deref_opt_out_bcount_nz_opt(__MP647)(__MP647 size)
-	{
-		return _SAL1_Source_(__deref_opt_out_bcount_nz_opt, size, __deref_opt_out_bcount_opt(size));
-	}
-	enum int _CRT_SECURE_NO_WARNINGS = 1;
-	auto __deref_out_ecount_nz_opt(__MP650)(__MP650 size)
-	{
-		return _SAL1_Source_(__deref_out_ecount_nz_opt, size, __deref_out_ecount_opt(size));
-	}
-	enum uint _UI16_MAX = 65535u;
-	auto ZSTD_VERSION_NUMBER()()
-	{
-		return ZSTD_VERSION_MAJOR * 100 * 100 + ZSTD_VERSION_MINOR * 100 + ZSTD_VERSION_RELEASE;
-	}
-	enum int SHRT_MAX = 32767;
-	auto LONG_MIN()()
-	{
-		return -2147483647 - 1;
-	}
-	auto __in_bcount_nz_opt(__MP688)(__MP688 size)
-	{
-		return _SAL1_Source_(__in_bcount_nz_opt, size, __in_bcount_opt(size));
-	}
-	enum int __STDC_NO_VLA__ = 1;
-	auto _ADDRESSOF(__MP712)(__MP712 v)
-	{
-		return &v;
-	}
-	auto __data_entrypoint(__MP721)(__MP721 category)
-	{
-		return _SAL_L_Source_(__data_entrypoint, category, __inner_data_entrypoint(category));
-	}
-	enum int _CRT_NONSTDC_NO_DEPRECATE = 1;
-	auto _Inout_opt_bytecount_c_(__MP758)(__MP758 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_bytecount_c_, size, _Prepost_opt_bytecount_c_(size));
-	}
-	enum int _M_AMD64 = 100;
-	enum int SCHAR_MAX = 127;
-	enum uint _UI32_MAX = 4294967295u;
-	enum int ZSTD_VERSION_MAJOR = 1;
-	enum int __SAL_H_VERSION = 180000000;
-	enum int _USE_DECLSPECS_FOR_SAL = 0;
-	auto __builtin_isnan(__MP801)(__MP801 x)
+	auto __builtin_isnan(__MP11)(__MP11 x)
 	{
 		return isnan(x);
 	}
-	auto _I64_MIN()()
+	auto __builtin_isfinite(__MP12)(__MP12 x)
 	{
-		return -9223372036854775807L - 1;
+		return finite(x);
 	}
-	auto ZSTD_CONTENTSIZE_ERROR()()
+	auto __builtin_alloca(__MP13)(__MP13 x)
 	{
-		return 0LU - 2;
+		return alloca(x);
 	}
-	auto __deref_opt_inout_bcount_nz_opt(__MP817)(__MP817 size)
-	{
-		return _SAL1_Source_(__deref_opt_inout_bcount_nz_opt, size, __deref_opt_inout_bcount_opt(size));
-	}
-	auto __deref_out_bcount_nz_opt(__MP824)(__MP824 size)
-	{
-		return _SAL1_Source_(__deref_out_bcount_nz_opt, size, __deref_out_bcount_opt(size));
-	}
-	auto _Inout_opt_count_x_(__MP828)(__MP828 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_count_x_, size, _Prepost_opt_count_x_(size));
-	}
-	auto __inout_ecount_full(__MP851)(__MP851 size)
-	{
-		return _SAL1_Source_(__inout_ecount_full, size, _Inout_updates_all_(size));
-	}
-	auto __deref_inout_ecount_nz_opt(__MP852)(__MP852 size)
-	{
-		return _SAL1_Source_(__deref_inout_ecount_nz_opt, size, __deref_inout_ecount_opt(size));
-	}
-	auto ZSTD_MAX_INPUT_SIZE()()
-	{
-		return (ulong).sizeof == 8 ? 18374966859414961920LU : 4278255360u;
-	}
-	auto __deref_out_ecount_full(__MP916)(__MP916 size)
-	{
-		return _SAL1_Source_(__deref_out_ecount_full, size, __deref_out_ecount_part(size, size));
-	}
-	auto __in_ecount_opt(__MP938)(__MP938 size)
-	{
-		return _SAL1_Source_(__in_ecount_opt, size, _In_reads_opt_(size));
-	}
-	enum uint _UI8_MAX = 255u;
-	auto _I32_MIN()()
-	{
-		return -2147483647 - 1;
-	}
-	auto __out_ecount_opt(__MP977)(__MP977 size)
-	{
-		return _SAL1_Source_(__out_ecount_opt, size, _Out_writes_opt_(size));
-	}
-	auto __inout_bcount_nz(__MP983)(__MP983 size)
-	{
-		return _SAL1_Source_(__inout_bcount_nz, size, __inout_bcount(size));
-	}
-	enum int _CRT_BUILD_DESKTOP_APP = 1;
-	auto __deref_opt_inout_ecount_nz(__MP990)(__MP990 size)
-	{
-		return _SAL1_Source_(__deref_opt_inout_ecount_nz, size, __deref_opt_inout_ecount(size));
-	}
-	enum int _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_MEMORY = 0;
-	enum uint ULONG_MAX = 4294967295u;
-	enum int _NO_CRT_STDIO_INLINE = 1;
-	enum int __STDC_WANT_SECURE_LIB__ = 1;
-	auto _Format_string_impl_(__MP1053, __MP1054)(__MP1053 kind, __MP1054 where)
-	{
-		return _SA_annotes2(SAL_IsFormatString2, kind, where);
-	}
-	enum int _MT = 1;
-	enum uint ZSTD_MAGIC_SKIPPABLE_MASK = 4294967280u;
-	auto __inout_bcount(__MP1083)(__MP1083 size)
-	{
-		return _SAL1_Source_(__inout_bcount, size, _Inout_updates_bytes_(size));
-	}
-	auto INT_MIN()()
-	{
-		return -2147483647 - 1;
-	}
-	auto __in_bcount_nz(__MP1085)(__MP1085 size)
-	{
-		return _SAL1_Source_(__in_bcount_nz, size, __in_bcount(size));
-	}
-	enum int _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES_MEMORY = 0;
-	auto __inout_bcount_nz_opt(__MP1102)(__MP1102 size)
-	{
-		return _SAL1_Source_(__inout_bcount_nz_opt, size, __inout_bcount_opt(size));
-	}
-	enum uint ZSTD_MAGICNUMBER = 4247762216u;
-	enum int _MSVC_WARNING_LEVEL = 1;
-	auto __deref_opt_inout_bcount_nz(__MP1210)(__MP1210 size)
-	{
-		return _SAL1_Source_(__deref_opt_inout_bcount_nz, size, __deref_opt_inout_bcount(size));
-	}
-	auto __in_ecount_nz(__MP1215)(__MP1215 size)
-	{
-		return _SAL1_Source_(__in_ecount_nz, size, __in_ecount(size));
-	}
-	enum int _CRT_INT_MAX = 2147483647;
-	enum ulong SIZE_MAX = 18446744073709551615LU;
-	auto __deref_inout_bcount_full(__MP1242)(__MP1242 size)
-	{
-		return _SAL1_Source_(__deref_inout_bcount_full, size, __deref_inout_bcount_part(size, size));
-	}
-	auto __crt_va_start(__MP1261, __MP1262)(__MP1261 ap, __MP1262 x)
-	{
-		return __crt_va_start_a(ap, x);
-	}
-	auto _CRT_UNUSED(__MP1277)(__MP1277 x)
-	{
-		return cast(void)x;
-	}
-	auto __inout_ecount_nz(__MP1288)(__MP1288 size)
-	{
-		return _SAL1_Source_(__inout_ecount_nz, size, __inout_ecount(size));
-	}
-	auto _Inout_opt_ptrdiff_count_(__MP1290)(__MP1290 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_ptrdiff_count_, size, _Pre_opt_ptrdiff_count_(size));
-	}
-	auto __deref_out_bcount_part(__MP1313, __MP1314)(__MP1313 size, __MP1314 length)
-	{
-		return _SAL1_Source_(__deref_out_bcount_part, (size , length), _Outptr_result_bytebuffer_to_(size, length));
-	}
-	enum int __STDC_HOSTED__ = 1;
-	auto __out_bcount_part(__MP1315, __MP1316)(__MP1315 size, __MP1316 length)
-	{
-		return _SAL1_Source_(__out_bcount_part, (size , length), _Out_writes_bytes_to_(size, length));
-	}
-	auto __out_bcount_full(__MP1319)(__MP1319 size)
-	{
-		return _SAL1_Source_(__out_bcount_full, size, _Out_writes_bytes_all_(size));
-	}
-	auto __inout_ecount_part(__MP1341, __MP1342)(__MP1341 size, __MP1342 length)
-	{
-		return _SAL1_Source_(__inout_ecount_part, (size , length), _Inout_updates_to_(size, length));
-	}
-	auto ZSTD_COMPRESSBOUND(__MP1358)(__MP1358 srcSize)
-	{
-		return cast(ulong)srcSize >= ZSTD_MAX_INPUT_SIZE ? 0 : srcSize + (srcSize >> 8) + (srcSize < 128 << 10 ? (128 << 10) - srcSize >> 11 : 0);
-	}
-	auto _Inout_opt_count_c_(__MP1362)(__MP1362 size)
-	{
-		return _SAL1_1_Source_(_Inout_opt_count_c_, size, _Prepost_opt_count_c_(size));
-	}
-	auto __deref_out_bcount_nz(__MP1365)(__MP1365 size)
-	{
-		return _SAL1_Source_(__deref_out_bcount_nz, size, __deref_out_ecount(size));
-	}
-	auto ZSTD_BLOCKSIZE_MAX()()
-	{
-		return 1 << ZSTD_BLOCKSIZELOG_MAX;
-	}
-	auto __GENSYM(__MP1375)(__MP1375 x)
-	{
-		return __MKID(x, __COUNTER__);
-	}
-	auto __MKID(__MP1377, __MP1378)(__MP1377 x, __MP1378 y)
-	{
-		return ___MKID(x, y);
-	}
-	enum int _I8_MAX = 127;
-	auto __deref_inout_ecount_full(__MP1389)(__MP1389 size)
-	{
-		return _SAL1_Source_(__deref_inout_ecount_full, size, __deref_inout_ecount_part(size, size));
-	}
-	auto __has_feature(__MP1404)(__MP1404 x)
+	auto __has_feature(__MP14)(__MP14 x)
 	{
 		return 0;
 	}
-	enum int _HAS_CXX23 = 0;
-	enum int ZSTD_MAGIC_SKIPPABLE_START = 407710288;
-	auto __inout_ecount(__MP1453)(__MP1453 size)
+	auto __has_extension(__MP15)(__MP15 x)
 	{
-		return _SAL1_Source_(__inout_ecount, size, _Inout_updates_(size));
+		return 0;
 	}
-	enum int _HAS_NODISCARD = 0;
-	auto __inout_bcount_part(__MP1458, __MP1459)(__MP1458 size, __MP1459 length)
+	enum int __STDC_NO_VLA__ = 1;
+	enum int _LIBC_LIMITS_H_ = 1;
+	enum int _FEATURES_H = 1;
+	auto __GNUC_PREREQ(__MP20, __MP21)(__MP20 maj, __MP21 min)
 	{
-		return _SAL1_Source_(__inout_bcount_part, (size , length), _Inout_updates_bytes_to_(size, length));
+		return (__GNUC__ << 16) + __GNUC_MINOR__ >= (maj << 16) + min;
 	}
-	auto __deref_out_ecount_part(__MP1461, __MP1462)(__MP1461 size, __MP1462 length)
+	auto __glibc_clang_prereq(__MP22, __MP23)(__MP22 maj, __MP23 min)
 	{
-		return _SAL1_Source_(__deref_out_ecount_part, (size , length), _Outptr_result_buffer_to_(size, length));
+		return 0;
 	}
-	auto _Inout_count_x_(__MP1466)(__MP1466 size)
+	enum int _DEFAULT_SOURCE = 1;
+	enum int __GLIBC_USE_ISOC2X = 0;
+	enum int __USE_ISOC11 = 1;
+	enum int __USE_ISOC99 = 1;
+	enum int __USE_ISOC95 = 1;
+	enum int __USE_POSIX_IMPLICITLY = 1;
+	enum int _POSIX_SOURCE = 1;
+	enum long _POSIX_C_SOURCE = 200809L;
+	enum int __USE_POSIX = 1;
+	enum int __USE_POSIX2 = 1;
+	enum int __USE_POSIX199309 = 1;
+	enum int __USE_POSIX199506 = 1;
+	enum int __USE_XOPEN2K = 1;
+	enum int __USE_XOPEN2K8 = 1;
+	enum int _ATFILE_SOURCE = 1;
+	enum int __WORDSIZE = 64;
+	enum int __WORDSIZE_TIME64_COMPAT32 = 1;
+	enum int __SYSCALL_WORDSIZE = 64;
+	enum int __USE_MISC = 1;
+	enum int __USE_ATFILE = 1;
+	enum int __USE_FORTIFY_LEVEL = 0;
+	enum int __GLIBC_USE_DEPRECATED_GETS = 0;
+	enum int __GLIBC_USE_DEPRECATED_SCANF = 0;
+	enum int __GNU_LIBRARY__ = 6;
+	enum int __GLIBC__ = 2;
+	enum int __GLIBC_MINOR__ = 35;
+	auto __GLIBC_PREREQ(__MP25, __MP26)(__MP25 maj, __MP26 min)
 	{
-		return _SAL1_1_Source_(_Inout_count_x_, size, _Prepost_count_x_(size));
+		return (__GLIBC__ << 16) + __GLIBC_MINOR__ >= (maj << 16) + min;
 	}
-	auto __typefix(__MP1467)(__MP1467 ctype)
+	enum int _SYS_CDEFS_H = 1;
+	auto __glibc_has_attribute(__MP27)(__MP27 attr)
 	{
-		return _SAL1_Source_(__typefix, ctype, __inner_typefix(ctype));
+		return __has_attribute(attr);
 	}
-	auto _SLOTSIZEOF(__MP1473)(__MP1473 t)
+	auto __glibc_has_builtin(__MP28)(__MP28 name)
 	{
-		return t.sizeof;
+		return __has_builtin(name);
 	}
-	auto __deref_opt_out_ecount_nz_opt(__MP1474)(__MP1474 size)
+	auto __glibc_has_extension(__MP29)(__MP29 ext)
 	{
-		return _SAL1_Source_(__deref_opt_out_ecount_nz_opt, size, __deref_opt_out_ecount_opt(size));
+		return __has_extension(ext);
 	}
-	auto _Inout_count_c_(__MP1499)(__MP1499 size)
+	auto __P(__MP32)(__MP32 args)
 	{
-		return _SAL1_1_Source_(_Inout_count_c_, size, _Prepost_count_c_(size));
+		return args;
+	}
+	auto __PMT(__MP33)(__MP33 args)
+	{
+		return args;
+	}
+	auto __bos(__MP37)(__MP37 ptr)
+	{
+		return __builtin_object_size(ptr, __USE_FORTIFY_LEVEL > 1);
+	}
+	auto __bos0(__MP38)(__MP38 ptr)
+	{
+		return __builtin_object_size(ptr, 0);
+	}
+	auto __glibc_objsize0(__MP39)(__MP39 __o)
+	{
+		return __bos0(__o);
+	}
+	auto __glibc_objsize(__MP40)(__MP40 __o)
+	{
+		return __bos(__o);
+	}
+	auto __glibc_safe_len_cond(__MP41, __MP42, __MP43)(__MP41 __l, __MP42 __s, __MP43 __osz)
+	{
+		return __l <= __osz / __s;
+	}
+	auto __glibc_safe_or_unknown_len(__MP45, __MP46, __MP47)(__MP45 __l, __MP46 __s, __MP47 __osz)
+	{
+		return __glibc_unsigned_or_positive(__l) && __builtin_constant_p(__glibc_safe_len_cond(__SIZE_TYPE__(__l), __s, __osz)) && __glibc_safe_len_cond(__SIZE_TYPE__(__l), __s, __osz);
+	}
+	auto __glibc_unsafe_len(__MP48, __MP49, __MP50)(__MP48 __l, __MP49 __s, __MP50 __osz)
+	{
+		return __glibc_unsigned_or_positive(__l) && __builtin_constant_p(__glibc_safe_len_cond(__SIZE_TYPE__(__l), __s, __osz)) && !__glibc_safe_len_cond(__SIZE_TYPE__(__l), __s, __osz);
+	}
+	enum int __glibc_c99_flexarr_available = 1;
+	auto __ASMNAME(__MP63)(__MP63 cname)
+	{
+		return __ASMNAME2(__USER_LABEL_PREFIX__, cname);
+	}
+	auto __nonnull(__MP73)(__MP73 params)
+	{
+		return __attribute_nonnull__(params);
+	}
+	auto __va_arg_pack()()
+	{
+		return __builtin_va_arg_pack();
+	}
+	auto __va_arg_pack_len()()
+	{
+		return __builtin_va_arg_pack_len();
+	}
+	auto __glibc_unlikely(__MP74)(__MP74 cond)
+	{
+		return __builtin_expect(cond, 0);
+	}
+	auto __glibc_likely(__MP75)(__MP75 cond)
+	{
+		return __builtin_expect(cond, 1);
+	}
+	enum int __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI = 0;
+	auto __REDIRECT_LDBL(__MP89, __MP90, __MP91)(__MP89 name, __MP90 proto, __MP91 alias)
+	{
+		return __REDIRECT(name, proto, alias);
+	}
+	auto __REDIRECT_NTH_LDBL(__MP92, __MP93, __MP94)(__MP92 name, __MP93 proto, __MP94 alias)
+	{
+		return __REDIRECT_NTH(name, proto, alias);
+	}
+	enum int __HAVE_GENERIC_SELECTION = 1;
+	auto __fortified_attr_access(__MP98, __MP99, __MP100)(__MP98 a, __MP99 o, __MP100 s)
+	{
+		return __attr_access((a , o , s));
+	}
+	enum int __GLIBC_USE_LIB_EXT2 = 0;
+	enum int __GLIBC_USE_IEC_60559_BFP_EXT = 0;
+	enum int __GLIBC_USE_IEC_60559_BFP_EXT_C2X = 0;
+	enum int __GLIBC_USE_IEC_60559_EXT = 0;
+	enum int __GLIBC_USE_IEC_60559_FUNCS_EXT = 0;
+	enum int __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X = 0;
+	enum int __GLIBC_USE_IEC_60559_TYPES_EXT = 0;
+	enum int MB_LEN_MAX = 16;
+	auto LLONG_MIN()()
+	{
+		return -LLONG_MAX - 1L;
+	}
+	auto ULLONG_MAX()()
+	{
+		return LLONG_MAX * 2LU + 1LU;
+	}
+	enum int _BITS_POSIX1_LIM_H = 1;
+	enum int _POSIX_AIO_LISTIO_MAX = 2;
+	enum int _POSIX_AIO_MAX = 1;
+	enum int _POSIX_ARG_MAX = 4096;
+	enum int _POSIX_CHILD_MAX = 25;
+	enum int _POSIX_DELAYTIMER_MAX = 32;
+	enum int _POSIX_HOST_NAME_MAX = 255;
+	enum int _POSIX_LINK_MAX = 8;
+	enum int _POSIX_LOGIN_NAME_MAX = 9;
+	enum int _POSIX_MAX_CANON = 255;
+	enum int _POSIX_MAX_INPUT = 255;
+	enum int _POSIX_MQ_OPEN_MAX = 8;
+	enum int _POSIX_MQ_PRIO_MAX = 32;
+	enum int _POSIX_NAME_MAX = 14;
+	enum int _POSIX_NGROUPS_MAX = 8;
+	enum int _POSIX_OPEN_MAX = 20;
+	enum int _POSIX_PATH_MAX = 256;
+	enum int _POSIX_PIPE_BUF = 512;
+	enum int _POSIX_RE_DUP_MAX = 255;
+	enum int _POSIX_RTSIG_MAX = 8;
+	enum int _POSIX_SEM_NSEMS_MAX = 256;
+	enum int _POSIX_SEM_VALUE_MAX = 32767;
+	enum int _POSIX_SIGQUEUE_MAX = 32;
+	enum int _POSIX_SSIZE_MAX = 32767;
+	enum int _POSIX_STREAM_MAX = 8;
+	enum int _POSIX_SYMLINK_MAX = 255;
+	enum int _POSIX_SYMLOOP_MAX = 8;
+	enum int _POSIX_TIMER_MAX = 32;
+	enum int _POSIX_TTY_NAME_MAX = 9;
+	enum int _POSIX_TZNAME_MAX = 6;
+	enum int _POSIX_CLOCKRES_MIN = 20000000;
+	enum int NR_OPEN = 1024;
+	enum int NGROUPS_MAX = 65536;
+	enum int ARG_MAX = 131072;
+	enum int LINK_MAX = 127;
+	enum int MAX_CANON = 255;
+	enum int MAX_INPUT = 255;
+	enum int NAME_MAX = 255;
+	enum int PATH_MAX = 4096;
+	enum int PIPE_BUF = 4096;
+	enum int XATTR_NAME_MAX = 255;
+	enum int XATTR_SIZE_MAX = 65536;
+	enum int XATTR_LIST_MAX = 65536;
+	enum int RTSIG_MAX = 32;
+	enum int _POSIX_THREAD_KEYS_MAX = 128;
+	enum int PTHREAD_KEYS_MAX = 1024;
+	enum int _POSIX_THREAD_DESTRUCTOR_ITERATIONS = 4;
+	enum int _POSIX_THREAD_THREADS_MAX = 64;
+	enum int AIO_PRIO_DELTA_MAX = 20;
+	enum int PTHREAD_STACK_MIN = 16384;
+	enum int DELAYTIMER_MAX = 2147483647;
+	enum int TTY_NAME_MAX = 32;
+	enum int LOGIN_NAME_MAX = 256;
+	enum int HOST_NAME_MAX = 64;
+	enum int MQ_PRIO_MAX = 32768;
+	auto SEM_VALUE_MAX()()
+	{
+		return 2147483647;
+	}
+	enum int _BITS_POSIX2_LIM_H = 1;
+	enum int _POSIX2_BC_BASE_MAX = 99;
+	enum int _POSIX2_BC_DIM_MAX = 2048;
+	enum int _POSIX2_BC_SCALE_MAX = 99;
+	enum int _POSIX2_BC_STRING_MAX = 1000;
+	enum int _POSIX2_COLL_WEIGHTS_MAX = 2;
+	enum int _POSIX2_EXPR_NEST_MAX = 32;
+	enum int _POSIX2_LINE_MAX = 2048;
+	enum int _POSIX2_RE_DUP_MAX = 255;
+	enum int _POSIX2_CHARCLASS_NAME_MAX = 14;
+	enum int COLL_WEIGHTS_MAX = 255;
+	enum int CHARCLASS_NAME_MAX = 2048;
+	auto RE_DUP_MAX()()
+	{
+		return 32767;
+	}
+	auto SCHAR_MIN()()
+	{
+		return -SCHAR_MAX - 1;
+	}
+	auto UCHAR_MAX()()
+	{
+		return SCHAR_MAX * 2 + 1;
+	}
+	auto SHRT_MIN()()
+	{
+		return -SHRT_MAX - 1;
+	}
+	auto USHRT_MAX()()
+	{
+		return SHRT_MAX * 2 + 1;
+	}
+	auto INT_MIN()()
+	{
+		return -INT_MAX - 1;
+	}
+	auto UINT_MAX()()
+	{
+		return INT_MAX * 2u + 1u;
+	}
+	auto LONG_MIN()()
+	{
+		return -LONG_MAX - 1L;
+	}
+	auto ULONG_MAX()()
+	{
+		return LONG_MAX * 2LU + 1LU;
 	}
 	auto NULL()()
 	{
 		return cast(void*)0;
 	}
-	enum int _MSC_FULL_VER = 193933523;
-	enum int _I32_MAX = 2147483647;
-	enum int _I16_MAX = 32767;
-	enum int _HAS_CXX20 = 0;
-	enum int _MSC_VER = 1939;
-	enum int _MSVC_TRADITIONAL = 0;
-	auto __builtin_isfinite(__MP1548)(__MP1548 x)
+	auto offsetof(__MP104, __MP105)(__MP104 TYPE, __MP105 MEMBER)
 	{
-		return finite(x);
+		return __builtin_offsetof(TYPE, MEMBER);
 	}
-	enum int _CRT_HAS_CXX17 = 0;
-	enum int _HAS_EXCEPTIONS = 1;
-	enum int INT_MAX = 2147483647;
-	auto errno()()
+	enum int ZSTD_VERSION_MAJOR = 1;
+	enum int ZSTD_VERSION_MINOR = 5;
+	enum int ZSTD_VERSION_RELEASE = 6;
+	auto ZSTD_VERSION_NUMBER()()
 	{
-		return *_errno();
+		return ZSTD_VERSION_MAJOR * 100 * 100 + ZSTD_VERSION_MINOR * 100 + ZSTD_VERSION_RELEASE;
 	}
-	auto __deref_out_bcount(__MP1590)(__MP1590 size)
+	auto ZSTD_EXPAND_AND_QUOTE(__MP108)(__MP108 str)
 	{
-		return _SAL1_Source_(__deref_out_bcount, size, _Outptr_result_bytebuffer_(size));
+		return ZSTD_QUOTE(str);
 	}
-	auto SCHAR_MIN()()
-	{
-		return -128;
-	}
-	auto _Inout_bytecount_x_(__MP1641)(__MP1641 size)
-	{
-		return _SAL1_1_Source_(_Inout_bytecount_x_, size, _Prepost_bytecount_x_(size));
-	}
+	enum int ZSTD_CLEVEL_DEFAULT = 3;
+	enum uint ZSTD_MAGICNUMBER = 4247762216u;
 	enum uint ZSTD_MAGIC_DICTIONARY = 3962610743u;
-	auto LLONG_MIN()()
+	enum int ZSTD_MAGIC_SKIPPABLE_START = 407710288;
+	enum uint ZSTD_MAGIC_SKIPPABLE_MASK = 4294967280u;
+	enum int ZSTD_BLOCKSIZELOG_MAX = 17;
+	auto ZSTD_BLOCKSIZE_MAX()()
 	{
-		return -9223372036854775807L - 1;
+		return 1 << ZSTD_BLOCKSIZELOG_MAX;
 	}
-	auto _CRT_CONCATENATE(__MP1691, __MP1692)(__MP1691 a, __MP1692 b)
-	{
-		return _CRT_CONCATENATE_(a, b);
-	}
-	enum uint UINT_MAX = 4294967295u;
-	auto _Deref_ret_range_(__MP1697, __MP1698)(__MP1697 lb, __MP1698 ub)
-	{
-		return _SAL2_Source_(_Deref_ret_range_, (lb , ub), _Deref_ret_range_impl_(lb, ub));
-	}
-	auto __success(__MP1703)(__MP1703 expr)
-	{
-		return _SAL1_1_Source_(__success, expr, _Success_(expr));
-	}
-	auto __out_ecount(__MP1704)(__MP1704 size)
-	{
-		return _SAL1_Source_(__out_ecount, size, _Out_writes_(size));
-	}
-	auto __out_bcount(__MP1724)(__MP1724 size)
-	{
-		return _SAL1_Source_(__out_bcount, size, _Out_writes_bytes_(size));
-	}
-	enum int _MSVC_EXECUTION_CHARACTER_SET = 65001;
-	enum int __STDC_SECURE_LIB__ = 200411;
 	auto ZSTD_CONTENTSIZE_UNKNOWN()()
 	{
 		return 0LU - 1;
 	}
-	enum int _SAL_VERSION = 20;
-	enum int _INTEGRAL_MAX_BITS = 64;
-	enum int _UTF8 = 1;
-	auto __out_ecount_part(__MP1750, __MP1751)(__MP1750 size, __MP1751 length)
+	auto ZSTD_CONTENTSIZE_ERROR()()
 	{
-		return _SAL1_Source_(__out_ecount_part, (size , length), _Out_writes_to_(size, length));
+		return 0LU - 2;
 	}
-	auto _APALIGN(__MP1758, __MP1759)(__MP1758 t, __MP1759 ap)
+	auto ZSTD_MAX_INPUT_SIZE()()
 	{
-		return __alignof(t);
+		return (ulong).sizeof == 8 ? 18374966859414961920LU : 4278255360u;
 	}
-	auto __inout_ecount_nz_opt(__MP1777)(__MP1777 size)
+	auto ZSTD_COMPRESSBOUND(__MP109)(__MP109 srcSize)
 	{
-		return _SAL1_Source_(__inout_ecount_nz_opt, size, __inout_ecount_opt(size));
+		return cast(ulong)srcSize >= ZSTD_MAX_INPUT_SIZE ? 0 : srcSize + (srcSize >> 8) + (srcSize < 128 << 10 ? (128 << 10) - srcSize >> 11 : 0);
 	}
-	auto _threadid()()
-	{
-		return __threadid();
-	}
-	enum int _WIN32 = 1;
-	enum int _CRT_SECURE_CPP_OVERLOAD_SECURE_NAMES = 1;
-	enum int _VCRT_COMPILER_PREPROCESSOR = 1;
-	enum int _CRT_PACKING = 8;
 }
 import __builtins;
 
