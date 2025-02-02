@@ -55,6 +55,7 @@ void main()
 
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
 		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
+		applyHeaderWorkarounds();
 		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd_win.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
 	}
 
@@ -73,6 +74,7 @@ void main()
 		runCommand(i"cp -f $(buildNormalizedPath(zstdPath, "lib", "libzstd.a")) $(outPath)".text, getcwd());
 
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
+		applyHeaderWorkarounds();
 		runCommand("dmd source/zstd_posix.c -Hf=zstd.di -verrors=0 -main", getcwd());
 	}
 
@@ -80,12 +82,28 @@ void main()
 	if (exists(dipath)) {
 		string difilein = readText(dipath);
 		difilein = difilein.replace("\r\n", "\n");
+		auto difileout = difilein.split('\n');
+
+		//Work around ImportC generating these lines multiple times.
+		int c_ctr = 0;
+		int d_ctr = 0;
+		for (int i = 0; i < difileout.length; i++) {
+			if (difileout[i].strip().toUpper() == "struct ZSTD_CCtx_s;".toUpper()) {
+				if (c_ctr > 0) difileout[i] = "\t//struct ZSTD_CCtx_s;";
+				c_ctr++;
+			}
+			if (difileout[i].strip().toUpper() == "struct ZSTD_DCtx_s;".toUpper()) {
+				if (d_ctr > 0) difileout[i] = "\t//struct ZSTD_DCtx_s;";
+				d_ctr++;
+			}
+		}
+
 		auto difile = File(buildNormalizedPath(getcwd(), "zstd.di"), "w");
 		difile.writeln("module zstd;");
 		difile.writeln("nothrow:");
 		difile.writeln("@nogc:");
 		difile.writeln();
-		difile.writeln(difilein);
+		difile.writeln(difileout.join('\n'));
 		difile.flush();
 		difile.close();
 	}
@@ -98,4 +116,9 @@ private void runCommand(string command, string workDir) {
 	foreach (line; gitpid.stdout.byLine) writeln(i"$(line)".text);
 	foreach (line; gitpid.stderr.byLine) writeln(i"$(line)".text);
 	writeln();
+}
+
+private void applyHeaderWorkarounds() {
+	auto path = buildNormalizedPath(getcwd(), "zstd", "lib", "zstd.h");
+	std.file.write(path, readText(path).replace("#include <stddef.h>", "//#include <stddef.h>"));
 }

@@ -1,6 +1,6 @@
 name "zstd-build"
 description "Build the appropriate zstd libraries for your system."
 authors "EllipticBit LLC"
-copyright "Copyright © 2024, EllipticBit LLC"
+copyright "Copyright © 2024-2025, EllipticBit LLC"
 license "BSL-1.0"
 targetType "executable"
