@@ -81,7 +81,11 @@ void main()
 	string dipath = buildNormalizedPath(getcwd(), "zstd.di");
 	if (exists(dipath)) {
 		string difilein = readText(dipath);
-		difilein = difilein.replace("\r\n", "\n");
+		difilein = difilein.replace("\r\n", "\n")
+			.replace("\tconst ZSTD_CCtx_s*", "\tconst(ZSTD_CCtx_s*)")
+			.replace("\tconst ZSTD_DCtx_s*", "\tconst(ZSTD_DCtx_s*)")
+			.replace("\tconst ZSTD_CDict_s*", "\tconst(ZSTD_CDict_s*)")
+			.replace("\tconst ZSTD_DDict_s*", "\tconst(ZSTD_DDict_s*)");
 		auto difileout = difilein.split('\n');
 
 		//Work around ImportC generating these lines multiple times.

@@ -35,12 +35,12 @@ extern (C)
 	int ZSTD_defaultCLevel();
 	struct ZSTD_CCtx_s;
 	alias ZSTD_CCtx = const ZSTD_CCtx_s;
-	const ZSTD_CCtx_s* ZSTD_createCCtx();
+	const(ZSTD_CCtx_s*) ZSTD_createCCtx();
 	ulong ZSTD_freeCCtx(const ZSTD_CCtx_s* cctx);
 	ulong ZSTD_compressCCtx(const ZSTD_CCtx_s* cctx, void* dst, ulong dstCapacity, const(void)* src, ulong srcSize, int compressionLevel);
 	struct ZSTD_DCtx_s;
 	alias ZSTD_DCtx = const ZSTD_DCtx_s;
-	const ZSTD_DCtx_s* ZSTD_createDCtx();
+	const(ZSTD_DCtx_s*) ZSTD_createDCtx();
 	ulong ZSTD_freeDCtx(const ZSTD_DCtx_s* dctx);
 	ulong ZSTD_decompressDCtx(const ZSTD_DCtx_s* dctx, void* dst, ulong dstCapacity, const(void)* src, ulong srcSize);
 	enum ZSTD_strategy
@@ -199,7 +199,7 @@ extern (C)
 	alias ZSTD_outBuffer = ZSTD_outBuffer_s;
 	//struct ZSTD_CCtx_s;
 	alias ZSTD_CStream = const ZSTD_CCtx_s;
-	const ZSTD_CCtx_s* ZSTD_createCStream();
+	const(ZSTD_CCtx_s*) ZSTD_createCStream();
 	ulong ZSTD_freeCStream(const ZSTD_CCtx_s* zcs);
 	enum ZSTD_EndDirective
 	{
@@ -219,7 +219,7 @@ extern (C)
 	ulong ZSTD_endStream(const ZSTD_CCtx_s* zcs, ZSTD_outBuffer_s* output);
 	//struct ZSTD_DCtx_s;
 	alias ZSTD_DStream = const ZSTD_DCtx_s;
-	const ZSTD_DCtx_s* ZSTD_createDStream();
+	const(ZSTD_DCtx_s*) ZSTD_createDStream();
 	ulong ZSTD_freeDStream(const ZSTD_DCtx_s* zds);
 	ulong ZSTD_initDStream(const ZSTD_DCtx_s* zds);
 	ulong ZSTD_decompressStream(const ZSTD_DCtx_s* zds, ZSTD_outBuffer_s* output, ZSTD_inBuffer_s* input);
@@ -229,12 +229,12 @@ extern (C)
 	ulong ZSTD_decompress_usingDict(const ZSTD_DCtx_s* dctx, void* dst, ulong dstCapacity, const(void)* src, ulong srcSize, const(void)* dict, ulong dictSize);
 	struct ZSTD_CDict_s;
 	alias ZSTD_CDict = const ZSTD_CDict_s;
-	const ZSTD_CDict_s* ZSTD_createCDict(const(void)* dictBuffer, ulong dictSize, int compressionLevel);
+	const(ZSTD_CDict_s*) ZSTD_createCDict(const(void)* dictBuffer, ulong dictSize, int compressionLevel);
 	ulong ZSTD_freeCDict(const ZSTD_CDict_s* CDict);
 	ulong ZSTD_compress_usingCDict(const ZSTD_CCtx_s* cctx, void* dst, ulong dstCapacity, const(void)* src, ulong srcSize, const ZSTD_CDict_s* cdict);
 	struct ZSTD_DDict_s;
 	alias ZSTD_DDict = const ZSTD_DDict_s;
-	const ZSTD_DDict_s* ZSTD_createDDict(const(void)* dictBuffer, ulong dictSize);
+	const(ZSTD_DDict_s*) ZSTD_createDDict(const(void)* dictBuffer, ulong dictSize);
 	ulong ZSTD_freeDDict(const ZSTD_DDict_s* ddict);
 	ulong ZSTD_decompress_usingDDict(const ZSTD_DCtx_s* dctx, void* dst, ulong dstCapacity, const(void)* src, ulong srcSize, const ZSTD_DDict_s* ddict);
 	uint ZSTD_getDictID_fromDict(const(void)* dict, ulong dictSize);
