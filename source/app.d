@@ -1,3 +1,4 @@
+import std.algorithm.searching;
 import std.conv;
 import std.datetime;
 import std.file;
@@ -52,65 +53,108 @@ void main()
 		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(debx86buildparams)".text, zstdPath);
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Debug Static Library:".text);
 		runCommand(i"\"$(msbuildpath)\" \"$(buildNormalizedPath(zstdPath, "build", "VS2010", "libzstd", "libzstd.vcxproj"))\" $(debx64buildparams)".text, zstdPath);
-
-		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
-		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
-		applyHeaderWorkarounds();
-		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd_win.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
 	}
 
-	version(linux) {
-		version(x86) {
-		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x86 Static Library:".text);
-		string outPath = buildNormalizedPath(getcwd(), "lib", "release", "linux-x86");
-		}
-		version(X86_64) {
+	version(posix) {
 		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Build x64 Static Library:".text);
-		string outPath = buildNormalizedPath(getcwd(), "lib", "release", "linux-x64");
-		}
+		string outPath = buildNormalizedPath(getcwd(), "lib", "release", "posix-x64");
 
-		runCommand("make", zstdPath);
+		runCommand("make lib", zstdPath);
 		runCommand(i"mkdir -p $(outPath)".text, getcwd());
 		runCommand(i"cp -f $(buildNormalizedPath(zstdPath, "lib", "libzstd.a")) $(outPath)".text, getcwd());
+	}
 
-		writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
-		applyHeaderWorkarounds();
-		runCommand("dmd source/zstd_posix.c -Hf=zstd.di -verrors=0 -main", getcwd());
+	writeln(i"[$((cast(TimeOfDay)Clock.currTime()).toISOExtString())] Generate DI File for ZStandard:".text);
+	alterHeader();
+
+	version(Windows) {
+		string vcvarspath = buildNormalizedPath(dirName(msbuildpath), "..\\..\\..\\", "VC", "Auxiliary", "Build", "vcvarsall.bat");
+		runCommand(i"\"$(vcvarspath)\" x86_amd64 && dmd source/zstd.c -Hf=zstd.di -verrors=0 -main".text, getcwd());
+	}
+	version(posix) {
+		runCommand("dmd source/zstd.c -Hf=zstd.di -verrors=0 -main", getcwd());
 	}
 
 	string dipath = buildNormalizedPath(getcwd(), "zstd.di");
 	if (exists(dipath)) {
-		string difilein = readText(dipath);
-		difilein = difilein.replace("\r\n", "\n")
-			.replace("\tconst ZSTD_CCtx_s*", "\tconst(ZSTD_CCtx_s*)")
-			.replace("\tconst ZSTD_DCtx_s*", "\tconst(ZSTD_DCtx_s*)")
-			.replace("\tconst ZSTD_CDict_s*", "\tconst(ZSTD_CDict_s*)")
-			.replace("\tconst ZSTD_DDict_s*", "\tconst(ZSTD_DDict_s*)");
-		auto difileout = difilein.split('\n');
+		alterDFile();
+	}
+}
 
-		//Work around ImportC generating these lines multiple times.
-		int c_ctr = 0;
-		int d_ctr = 0;
-		for (int i = 0; i < difileout.length; i++) {
-			if (difileout[i].strip().toUpper() == "struct ZSTD_CCtx_s;".toUpper()) {
-				if (c_ctr > 0) difileout[i] = "\t//struct ZSTD_CCtx_s;";
-				c_ctr++;
+private void alterHeader() {
+	auto path = buildNormalizedPath(getcwd(), "zstd", "lib", "zstd.h");
+	string result = string.init;
+
+	auto hfilein = File(path, "r");
+	foreach (line; hfilein.byLine()) {
+		if (line.canFind("ZSTD_LIB_VERSION")) continue;
+		if (line.canFind("ZSTD_QUOTE")) continue;
+		if (line.canFind("ZSTD_EXPAND_AND_QUOTE")) continue;
+
+		result ~= line ~ "\n";
+	}
+	hfilein.close();
+
+	std.file.write(path, result);
+}
+
+private void alterDFile() {
+	string diPath = buildNormalizedPath(getcwd(), "zstd.di");
+	string result = string.init;
+
+	auto difilein = File(diPath, "r");
+	int c = 0;
+	bool inBlock = false;
+	int blocks = 0;
+	bool hasCCtx = false;
+	bool hasDCtx = false;
+	foreach (line; difilein.byLine()) {
+		//Skip the comment at the beginning of the file.
+		if (c == 0) {
+			c++;
+			continue;
+		}
+
+		if (!inBlock) {
+			// Work around DMD Issue 20911: https://github.com/dlang/dmd/issues/20911
+			if (hasCCtx && line.canFind("struct ZSTD_CCtx_s")) continue;
+			if (hasDCtx && line.canFind("struct ZSTD_DCtx_s")) continue;
+			if (line.canFind("ZSTD_CCtx_s")) hasCCtx = true;
+			if (line.canFind("ZSTD_DCtx_s")) hasDCtx = true;
+
+			if (line.canFind("alias errno_t") || line.canFind("alias __uint32_t") || line.canFind("alias __uint64_t")) {
+				result ~= line ~ "\n";
+				continue;
 			}
-			if (difileout[i].strip().toUpper() == "struct ZSTD_DCtx_s;".toUpper()) {
-				if (d_ctr > 0) difileout[i] = "\t//struct ZSTD_DCtx_s;";
-				d_ctr++;
+
+			if (line.canFind("ZSTD_") && !line.canFind(";")) {
+				inBlock = true;
+				blocks = 0;
+			} else if (!line.canFind("ZSTD_")) continue;
+		} else {
+			if (line.canFind("{")) blocks++;
+			if (line.canFind("}")) blocks--;
+
+			if (blocks <= 0) {
+				inBlock = false;
+				blocks = 0;
 			}
 		}
 
-		auto difile = File(buildNormalizedPath(getcwd(), "zstd.di"), "w");
-		difile.writeln("module zstd;");
-		difile.writeln("nothrow:");
-		difile.writeln("@nogc:");
-		difile.writeln();
-		difile.writeln(difileout.join('\n'));
-		difile.flush();
-		difile.close();
+		result ~= line ~ "\n";
 	}
+	difilein.close();
+
+	auto output = File(diPath, "w");
+	output.writeln("module zstd;");
+	output.writeln("public:");
+	output.writeln();
+	output.writeln("extern (C)");
+	output.writeln("{");
+	output.write(result);
+	output.writeln("}");
+	output.flush();
+	output.close();
 }
 
 private void runCommand(string command, string workDir) {
@@ -120,9 +164,4 @@ private void runCommand(string command, string workDir) {
 	foreach (line; gitpid.stdout.byLine) writeln(i"$(line)".text);
 	foreach (line; gitpid.stderr.byLine) writeln(i"$(line)".text);
 	writeln();
-}
-
-private void applyHeaderWorkarounds() {
-	auto path = buildNormalizedPath(getcwd(), "zstd", "lib", "zstd.h");
-	std.file.write(path, readText(path).replace("#include <stddef.h>", "//#include <stddef.h>"));
 }
