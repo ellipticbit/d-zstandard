@@ -6,6 +6,82 @@ extern (C)
 	alias __uint32_t = uint;
 	alias __uint64_t = ulong;
 	alias errno_t = int;
+	enum ZSTD_ErrorCode
+	{
+		ZSTD_error_no_error = 0,
+		ZSTD_error_GENERIC = 1,
+		ZSTD_error_prefix_unknown = 10,
+		ZSTD_error_version_unsupported = 12,
+		ZSTD_error_frameParameter_unsupported = 14,
+		ZSTD_error_frameParameter_windowTooLarge = 16,
+		ZSTD_error_corruption_detected = 20,
+		ZSTD_error_checksum_wrong = 22,
+		ZSTD_error_literals_headerWrong = 24,
+		ZSTD_error_dictionary_corrupted = 30,
+		ZSTD_error_dictionary_wrong = 32,
+		ZSTD_error_dictionaryCreation_failed = 34,
+		ZSTD_error_parameter_unsupported = 40,
+		ZSTD_error_parameter_combination_unsupported = 41,
+		ZSTD_error_parameter_outOfBound = 42,
+		ZSTD_error_tableLog_tooLarge = 44,
+		ZSTD_error_maxSymbolValue_tooLarge = 46,
+		ZSTD_error_maxSymbolValue_tooSmall = 48,
+		ZSTD_error_cannotProduce_uncompressedBlock = 49,
+		ZSTD_error_stabilityCondition_notRespected = 50,
+		ZSTD_error_stage_wrong = 60,
+		ZSTD_error_init_missing = 62,
+		ZSTD_error_memory_allocation = 64,
+		ZSTD_error_workSpace_tooSmall = 66,
+		ZSTD_error_dstSize_tooSmall = 70,
+		ZSTD_error_srcSize_wrong = 72,
+		ZSTD_error_dstBuffer_null = 74,
+		ZSTD_error_noForwardProgress_destFull = 80,
+		ZSTD_error_noForwardProgress_inputEmpty = 82,
+		ZSTD_error_frameIndex_tooLarge = 100,
+		ZSTD_error_seekableIO = 102,
+		ZSTD_error_dstBuffer_wrong = 104,
+		ZSTD_error_srcBuffer_wrong = 105,
+		ZSTD_error_sequenceProducer_failed = 106,
+		ZSTD_error_externalSequences_invalid = 107,
+		ZSTD_error_maxCode = 120,
+	}
+	alias ZSTD_error_no_error = ZSTD_ErrorCode.ZSTD_error_no_error;
+	alias ZSTD_error_GENERIC = ZSTD_ErrorCode.ZSTD_error_GENERIC;
+	alias ZSTD_error_prefix_unknown = ZSTD_ErrorCode.ZSTD_error_prefix_unknown;
+	alias ZSTD_error_version_unsupported = ZSTD_ErrorCode.ZSTD_error_version_unsupported;
+	alias ZSTD_error_frameParameter_unsupported = ZSTD_ErrorCode.ZSTD_error_frameParameter_unsupported;
+	alias ZSTD_error_frameParameter_windowTooLarge = ZSTD_ErrorCode.ZSTD_error_frameParameter_windowTooLarge;
+	alias ZSTD_error_corruption_detected = ZSTD_ErrorCode.ZSTD_error_corruption_detected;
+	alias ZSTD_error_checksum_wrong = ZSTD_ErrorCode.ZSTD_error_checksum_wrong;
+	alias ZSTD_error_literals_headerWrong = ZSTD_ErrorCode.ZSTD_error_literals_headerWrong;
+	alias ZSTD_error_dictionary_corrupted = ZSTD_ErrorCode.ZSTD_error_dictionary_corrupted;
+	alias ZSTD_error_dictionary_wrong = ZSTD_ErrorCode.ZSTD_error_dictionary_wrong;
+	alias ZSTD_error_dictionaryCreation_failed = ZSTD_ErrorCode.ZSTD_error_dictionaryCreation_failed;
+	alias ZSTD_error_parameter_unsupported = ZSTD_ErrorCode.ZSTD_error_parameter_unsupported;
+	alias ZSTD_error_parameter_combination_unsupported = ZSTD_ErrorCode.ZSTD_error_parameter_combination_unsupported;
+	alias ZSTD_error_parameter_outOfBound = ZSTD_ErrorCode.ZSTD_error_parameter_outOfBound;
+	alias ZSTD_error_tableLog_tooLarge = ZSTD_ErrorCode.ZSTD_error_tableLog_tooLarge;
+	alias ZSTD_error_maxSymbolValue_tooLarge = ZSTD_ErrorCode.ZSTD_error_maxSymbolValue_tooLarge;
+	alias ZSTD_error_maxSymbolValue_tooSmall = ZSTD_ErrorCode.ZSTD_error_maxSymbolValue_tooSmall;
+	alias ZSTD_error_cannotProduce_uncompressedBlock = ZSTD_ErrorCode.ZSTD_error_cannotProduce_uncompressedBlock;
+	alias ZSTD_error_stabilityCondition_notRespected = ZSTD_ErrorCode.ZSTD_error_stabilityCondition_notRespected;
+	alias ZSTD_error_stage_wrong = ZSTD_ErrorCode.ZSTD_error_stage_wrong;
+	alias ZSTD_error_init_missing = ZSTD_ErrorCode.ZSTD_error_init_missing;
+	alias ZSTD_error_memory_allocation = ZSTD_ErrorCode.ZSTD_error_memory_allocation;
+	alias ZSTD_error_workSpace_tooSmall = ZSTD_ErrorCode.ZSTD_error_workSpace_tooSmall;
+	alias ZSTD_error_dstSize_tooSmall = ZSTD_ErrorCode.ZSTD_error_dstSize_tooSmall;
+	alias ZSTD_error_srcSize_wrong = ZSTD_ErrorCode.ZSTD_error_srcSize_wrong;
+	alias ZSTD_error_dstBuffer_null = ZSTD_ErrorCode.ZSTD_error_dstBuffer_null;
+	alias ZSTD_error_noForwardProgress_destFull = ZSTD_ErrorCode.ZSTD_error_noForwardProgress_destFull;
+	alias ZSTD_error_noForwardProgress_inputEmpty = ZSTD_ErrorCode.ZSTD_error_noForwardProgress_inputEmpty;
+	alias ZSTD_error_frameIndex_tooLarge = ZSTD_ErrorCode.ZSTD_error_frameIndex_tooLarge;
+	alias ZSTD_error_seekableIO = ZSTD_ErrorCode.ZSTD_error_seekableIO;
+	alias ZSTD_error_dstBuffer_wrong = ZSTD_ErrorCode.ZSTD_error_dstBuffer_wrong;
+	alias ZSTD_error_srcBuffer_wrong = ZSTD_ErrorCode.ZSTD_error_srcBuffer_wrong;
+	alias ZSTD_error_sequenceProducer_failed = ZSTD_ErrorCode.ZSTD_error_sequenceProducer_failed;
+	alias ZSTD_error_externalSequences_invalid = ZSTD_ErrorCode.ZSTD_error_externalSequences_invalid;
+	alias ZSTD_error_maxCode = ZSTD_ErrorCode.ZSTD_error_maxCode;
+	nothrow @nogc const(char)* ZSTD_getErrorString(ZSTD_ErrorCode code);
 	nothrow @nogc __uint32_t ZSTD_versionNumber();
 	nothrow @nogc const(char)* ZSTD_versionString();
 	nothrow @nogc size_t ZSTD_compress(void* dst, size_t dstCapacity, const(void)* src, size_t srcSize, errno_t compressionLevel);
@@ -14,8 +90,9 @@ extern (C)
 	deprecated("Replaced by ZSTD_getFrameContentSize") deprecated nothrow @nogc __uint64_t ZSTD_getDecompressedSize(const(void)* src, size_t srcSize);
 	nothrow @nogc size_t ZSTD_findFrameCompressedSize(const(void)* src, size_t srcSize);
 	nothrow @nogc size_t ZSTD_compressBound(size_t srcSize);
-	nothrow @nogc __uint32_t ZSTD_isError(size_t code);
-	nothrow @nogc const(char)* ZSTD_getErrorName(size_t code);
+	nothrow @nogc __uint32_t ZSTD_isError(size_t result);
+	nothrow @nogc ZSTD_ErrorCode ZSTD_getErrorCode(size_t functionResult);
+	nothrow @nogc const(char)* ZSTD_getErrorName(size_t result);
 	nothrow @nogc errno_t ZSTD_minCLevel();
 	nothrow @nogc errno_t ZSTD_maxCLevel();
 	nothrow @nogc errno_t ZSTD_defaultCLevel();
@@ -90,6 +167,7 @@ extern (C)
 		ZSTD_c_experimentalParam17 = 1014,
 		ZSTD_c_experimentalParam18 = 1015,
 		ZSTD_c_experimentalParam19 = 1016,
+		ZSTD_c_experimentalParam20 = 1017,
 	}
 	alias ZSTD_c_compressionLevel = ZSTD_cParameter.ZSTD_c_compressionLevel;
 	alias ZSTD_c_windowLog = ZSTD_cParameter.ZSTD_c_windowLog;
@@ -129,6 +207,7 @@ extern (C)
 	alias ZSTD_c_experimentalParam17 = ZSTD_cParameter.ZSTD_c_experimentalParam17;
 	alias ZSTD_c_experimentalParam18 = ZSTD_cParameter.ZSTD_c_experimentalParam18;
 	alias ZSTD_c_experimentalParam19 = ZSTD_cParameter.ZSTD_c_experimentalParam19;
+	alias ZSTD_c_experimentalParam20 = ZSTD_cParameter.ZSTD_c_experimentalParam20;
 	struct ZSTD_bounds
 	{
 		size_t error = void;
@@ -237,7 +316,7 @@ extern (C)
 	nothrow @nogc size_t ZSTD_sizeof_DStream(ZSTD_DStream* zds);
 	nothrow @nogc size_t ZSTD_sizeof_CDict(ZSTD_CDict* cdict);
 	nothrow @nogc size_t ZSTD_sizeof_DDict(ZSTD_DDict* ddict);
-	enum errno_t ZSTD_VERSION_RELEASE = 6;
+	enum errno_t ZSTD_VERSION_RELEASE = 7;
 	enum errno_t ZSTD_CLEVEL_DEFAULT = 3;
 	enum errno_t ZSTD_VERSION_MINOR = 5;
 	enum errno_t ZSTD_BLOCKSIZELOG_MAX = 17;
